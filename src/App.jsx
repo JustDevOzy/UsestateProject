@@ -44,6 +44,18 @@ function App() {
 		setNewItem("")
 		setNewQuantity("")
 	}
+
+	function handleDelete(index) {
+		window.confirm("Delete item?") &&
+			setItems(items.filter((item, i) => i !== index))
+	}
+
+	function handleEdit(index) {
+		setCurrentIndex(index)
+		const { item, quantity } = items[index]
+		setNewItem(item)
+		setNewQuantity(quantity)
+	}
 	return (
 		<div className="container">
 			<h1 className="title text-center"> Inventory List</h1>
@@ -69,11 +81,10 @@ function App() {
 				</div>
 
 				<button className="btn" type="submit">
-					Save
+					{currentIndex >= 0 ? "Save" : "Add"}
 				</button>
 			</form>
 			<div className="alllists">
-				{console.log(items)}
 				{items.map((item, index) => (
 					<div className="list-items-new">
 						<div className="half">
@@ -81,8 +92,16 @@ function App() {
 								{item.item} {item.quantity}
 							</h3>
 							<div className="btns">
-								<button className="btn btn-1">Edit</button>
-								<button className="btn btn-2">X</button>
+								<button
+									className="btn btn-1"
+									onClick={() => handleEdit(index)}>
+									Edit
+								</button>
+								<button
+									className="btn btn-2"
+									onClick={() => handleDelete(index)}>
+									X
+								</button>
 							</div>
 						</div>
 					</div>
